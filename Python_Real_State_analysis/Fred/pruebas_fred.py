@@ -8,7 +8,7 @@ plt.style.use('fivethirtyeight')
 pd.set_option('display.max_columns', 200)
 color_palet = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
-fred_key = '9bf49a5620fc9111d8c2fad585e5f829'
+fred_key = 'lorem ipsum'
 
 fred = Fred(api_key= fred_key)
 
