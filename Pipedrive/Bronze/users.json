@@ -1,0 +1,46 @@
+{
+    "success": true,
+    "data": [
+        {
+            "id": 22693865,
+            "name": "Jes\u00fas Maeso",
+            "email": "jesusmaesog@gmail.com",
+            "lang": 6,
+            "locale": "es_ES",
+            "timezone_name": "Europe/Madrid",
+            "timezone_offset": "+01:00",
+            "default_currency": "EUR",
+            "icon_url": null,
+            "active_flag": true,
+            "is_deleted": false,
+            "is_admin": 1,
+            "role_id": 1,
+            "created": "2024-12-02 14:54:36",
+            "has_created_company": true,
+            "is_you": true,
+            "access": [
+                {
+                    "app": "sales",
+                    "admin": true,
+                    "permission_set_id": "592e0370-b0bd-11ef-b16a-c989eafaf1f9"
+                },
+                {
+                    "app": "global",
+                    "admin": true,
+                    "permission_set_id": "5933f6e0-b0bd-11ef-b16a-c989eafaf1f9"
+                },
+                {
+                    "app": "account_settings",
+                    "admin": true,
+                    "permission_set_id": "5939ea50-b0bd-11ef-b16a-c989eafaf1f9"
+                }
+            ],
+            "phone": null,
+            "modified": "2024-12-03 10:03:09",
+            "last_login": "2024-12-03 10:03:09"
+        }
+    ],
+    "additional_data": {
+        "company_id": 13934494
+    }
+}
