@@ -6,6 +6,8 @@ import faker
 import os
 import pyodbc
 import numpy as np
+from dotenv import load_dotenv
+from pykeepass import PyKeePass
 
 # Initialize Faker for generating random data
 # fake = faker.Faker()
@@ -39,29 +41,49 @@ import numpy as np
 
 #df.to_csv('C:/Users/jesus/OneDrive/Documents/Proyectos/Pipedrive/dababasepipedrive.csv', sep= ",", header= True, )
 
+# Cargar las variables del archivo .env
+load_dotenv(dotenv_path="C:/Users/jesus/OneDrive/Documents/Proyectos/Pipedrive/config/file.env")
 
-ClientID = '04b12a04ae1f121b'
-Clientsecret = 'e86dfa252a05f9016fe094d519f87cd590fbdbd9'
-code = '13934494.22693865.4326d79d1944f3494bff4798620cc3e0bf59ac35'
-domain = 'https://jesusmaeso-sandbox.pipedrive.com/'
-domain_deal = 'https://developers.pipedrive.com/docs/api/v1/Deals'
-folder_path = 'C:/Users/jesus/OneDrive/Documents/Proyectos/Pipedrive/'
-folder_path_bronze = 'C:/Users/jesus/OneDrive/Documents/Proyectos/Pipedrive/Bronze'
-folder_path_silver = 'C:/Users/jesus/OneDrive/Documents/Proyectos/Pipedrive/Silver'
-server = 'JESUSMAESOG_PC'
-database = 'Pipedrive_persons'
-table_name1 = 'Persons'
-table_name2 = 'Email'
-table_name3 = 'Phone'
+# Obtener las variables del archivo .env
+master_password = os.getenv("KEEPASS_MASTER_PASSWORD")
+api_token = os.getenv("API_TOKEN")
+client_id = os.getenv("CLIENT_ID")
+client_secret = os.getenv("CLIENT_SECRET")
 
-cliente = Client(ClientID, Clientsecret, domain)
-cliente.set_api_token('4bcae69d8c98f160c7e0741f94f1566091b32f4e')
+if not master_password or not api_token or not client_id or not client_secret:
+    raise ValueError("Una o más variables de entorno no se cargaron correctamente.")
+
+# Usar la contraseña maestra para abrir la base de datos KeePass
+db_path = 'C:/Users/jesus/OneDrive/Documents/Proyectos/mycode/Pipedrive/Pipedrive_keepass.kdbx' 
+password=master_password
+
+# Cargar la base de datos
+kp = PyKeePass(db_path, password=master_password)
+
+# Acceder a las entradas y obtener los valores de las credenciales
+client_id = kp.find_entries(title="ClientID", first=True).password
+client_secret = kp.find_entries(title="Clientsecret", first=True).password
+code = kp.find_entries(title="code", first=True).password
+domain = kp.find_entries(title="domain", first=True).password
+domain_deal = kp.find_entries(title="domain_deal", first=True).password
+folder_path = kp.find_entries(title="folder_path", first=True).password
+folder_path_bronze = kp.find_entries(title="folder_path_bronze", first=True).password
+folder_path_silver = kp.find_entries(title="folder_path_silver", first=True).password
+server = kp.find_entries(title="server", first=True).password
+database = kp.find_entries(title="database", first=True).password
+table_name1 = kp.find_entries(title="table_name1", first=True).password
+table_name2 = kp.find_entries(title="table_name2", first=True).password
+table_name3 = kp.find_entries(title="table_name3", first=True).password
+api_token = kp.find_entries(title="api_token", first=True).password
+
+cliente = Client(client_id, client_secret, domain)
+cliente.set_api_token(api_token)
 users = cliente.users.get_all_users()
 deals = cliente.deals.get_all_deals()
 organizations = cliente.organizations.get_all_organizations()
 persons = cliente.persons.get_all_persons()
 
-def export_pipedrive_data(folder_path, cliente):
+def export_pipedrive_data(folder_path_bronze, cliente):
     """
     Exporta datos de Pipedrive a archivos JSON en la carpeta especificada.
 
@@ -73,14 +95,14 @@ def export_pipedrive_data(folder_path, cliente):
         None
     """
     # Crear la carpeta si no existe
-    os.makedirs(folder_path, exist_ok=True)
+    os.makedirs(folder_path_bronze, exist_ok=True)
 
     # Diccionario con los endpoints y nombres de archivos
     endpoints = {
-        "users": client.users.get_all_users(),
-        "deals": client.deals.get_all_deals(),
-        "organizations": client.organizations.get_all_organizations(),
-        "persons": client.persons.get_all_persons()
+        "users": cliente.users.get_all_users(),
+        "deals": cliente.deals.get_all_deals(),
+        "organizations": cliente.organizations.get_all_organizations(),
+        "persons": cliente.persons.get_all_persons()
     }
 
     for name, data in endpoints.items():
@@ -93,9 +115,8 @@ def export_pipedrive_data(folder_path, cliente):
 
         print(f"File {name}.json saved into: {file_path}")
 
-# Uso de la función
-folder_path = 'C:/Users/jesus/OneDrive/Documents/Proyectos/Pipedrive/Bronze/'  
-#export_pipedrive_data(folder_path, cliente)
+
+export_pipedrive_data(folder_path_bronze, cliente)
 
 # Primero vamos a guardar el data en una variable data por si acaso
 
