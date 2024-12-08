@@ -10,36 +10,36 @@ from dotenv import load_dotenv
 from pykeepass import PyKeePass
 
 # Initialize Faker for generating random data
-# fake = faker.Faker()
+fake = faker.Faker()
 
-# # Generate 100 random entries for each column
-# names = [fake.first_name() for _ in range(100)]
-# surnames = [fake.last_name() for _ in range(100)]
-# phones = [fake.phone_number() for _ in range(100)]
-# emails1 = [fake.email() for _ in range(100)]
-# emails2 = [fake.email() for _ in range(100)]
-# companies = [fake.company() for _ in range(100)]
-# addresses = [fake.address().replace("\n", ", ") for _ in range(100)]
-# projects = [fake.catch_phrase() for _ in range(100)]
-# amounts = [random.randint(500000, 1500000) for _ in range(100)]
+ # Generate 100 random entries for each column
+names = [fake.first_name() for _ in range(100)]
+surnames = [fake.last_name() for _ in range(100)]
+phones = [fake.phone_number() for _ in range(100)]
+emails1 = [fake.email() for _ in range(100)]
+emails2 = [fake.email() for _ in range(100)]
+companies = [fake.company() for _ in range(100)]
+addresses = [fake.address().replace("\n", ", ") for _ in range(100)]
+projects = [fake.catch_phrase() for _ in range(100)]
+amounts = [random.randint(500000, 1500000) for _ in range(100)]
 
-# Create a DataFrame with the generated data
-# data = {
-#     "Nombre": names,
-#     "Apellido": surnames,
-#     "Teléfono": phones,
-#     "Email 1": emails1,
-#     "Email 2": emails2,
-#     "Empresa": companies,
-#     "Dirección": addresses,
-#     "Proyecto": projects,
-#     "Importe (€)": amounts,
-# }
+ #Create a DataFrame with the generated data
+data = {
+    "Nombre": names,
+    "Apellido": surnames,
+    "Teléfono": phones,
+    "Email 1": emails1,
+    "Email 2": emails2,
+    "Empresa": companies,
+    "Dirección": addresses,
+    "Proyecto": projects,
+    "Importe (€)": amounts,
+ }
 
-# df = pd.DataFrame(data)
-# df
+df = pd.DataFrame(data)
+df
 
-#df.to_csv('C:/Users/jesus/OneDrive/Documents/Proyectos/Pipedrive/dababasepipedrive.csv', sep= ",", header= True, )
+df.to_csv('./Pipedrive/dababasepipedrive.csv', sep= ",", header= True, )
 
 # Cargar las variables del archivo .env
 load_dotenv(dotenv_path="C:/Users/jesus/OneDrive/Documents/Proyectos/Pipedrive/config/file.env")
@@ -113,7 +113,7 @@ def export_pipedrive_data(folder_path_bronze, cliente):
         with open(file_path, 'w') as file:
             json.dump(data, file, indent=4)
 
-        print(f"File {name}.json saved into: {file_path}")
+        print(f"Archivo {name}.json guardado correctamente en: {file_path}")
 
 
 export_pipedrive_data(folder_path_bronze, cliente)
