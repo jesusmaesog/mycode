@@ -1,4 +1,5 @@
 # Ignorar archivos sensibles
+.venv
 .env
 *.pyc
 __pycache__
